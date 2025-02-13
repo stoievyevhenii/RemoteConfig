@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
 using RemoteConfig.DataAccess.Identity;
+using RemoteConfig.Shared.StaticValues;
 
 namespace RemoteConfig.DataAccess.Persistence
 {
@@ -15,6 +16,7 @@ namespace RemoteConfig.DataAccess.Persistence
                     UserName = "admin",
                     Email = "admin@admin.com",
                     EmailConfirmed = true,
+                    Role = UserRole.Admin,
                     FullName = "Standart Administrator"
                 };
 
