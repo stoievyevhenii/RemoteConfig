@@ -2,6 +2,7 @@ using RemoteConfig.Api;
 using RemoteConfig.Api.CachePolicy;
 using RemoteConfig.Api.Middlewares.Impl.CacheEvict;
 using RemoteConfig.Api.Middlewares.Impl.ExceptionHandling;
+using RemoteConfig.Application;
 using RemoteConfig.DataAccess;
 using RemoteConfig.DataAccess.Persistence;
 
@@ -14,6 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 
 builder.Services
+    .AddApplication(builder.Environment, builder.Configuration)
     .AddDataAccess(builder.Configuration);
 
 builder.Services.AddJwt(builder.Configuration);

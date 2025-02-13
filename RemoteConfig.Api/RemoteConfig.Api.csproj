@@ -8,14 +8,18 @@
     <EnableSdkContainerDebugging>True</EnableSdkContainerDebugging>
     <ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:9.0</ContainerBaseImage>
     <UserSecretsId>ad0b94a3-87cd-483c-ac27-c1fde51e8281</UserSecretsId>
-    <AssemblyVersion>1.2.13.7</AssemblyVersion>
-    <FileVersion>1.2.13.7</FileVersion>
+    <AssemblyVersion>1.2.13.17</AssemblyVersion>
+    <FileVersion>1.2.13.17</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Consul" Version="1.7.14.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Scalar.AspNetCore" Version="2.0.14" />
   </ItemGroup>
 
