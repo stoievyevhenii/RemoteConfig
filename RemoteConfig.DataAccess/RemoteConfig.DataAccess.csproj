@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyVersion>1.2.13.1</AssemblyVersion>
-    <FileVersion>1.2.13.1</FileVersion>
+    <AssemblyVersion>1.2.13.3</AssemblyVersion>
+    <FileVersion>1.2.13.3</FileVersion>
   </PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="EntityFramework" Version="6.5.1" />
@@ -24,9 +24,6 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\RemoteConfig.Core\RemoteConfig.Core.csproj" />
 	  <ProjectReference Include="..\RemoteConfig.Shared\RemoteConfig.Shared.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Repositories\Impl\" />
 	</ItemGroup>
 
 </Project>

@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 using RemoteConfig.DataAccess.Identity;
 using RemoteConfig.DataAccess.Persistence;
+using RemoteConfig.DataAccess.Repositories;
+using RemoteConfig.DataAccess.Repositories.Impl;
 
 namespace RemoteConfig.DataAccess
 {
@@ -14,6 +16,7 @@ namespace RemoteConfig.DataAccess
         {
             services.AddDatabase(configuration);
             services.AddIdentity();
+            services.AddRepositories();
             return services;
         }
 
@@ -56,6 +59,10 @@ namespace RemoteConfig.DataAccess
         }
 
         private static void AddRepositories(this IServiceCollection services)
-        { }
+        {
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<IAppConfigurationRepository, AppConfigurationRepository>();
+            services.AddScoped<IProjectRepository, ProjectRepository>();
+        }
     }
 }
