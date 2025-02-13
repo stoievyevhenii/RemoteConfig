@@ -23,6 +23,7 @@ namespace RemoteConfig.Application
         private static void AddServices(this IServiceCollection services)
         {
             services.AddScoped<IClaimService, ClaimService>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICompanyService, CompanyService>();
         }
     }
