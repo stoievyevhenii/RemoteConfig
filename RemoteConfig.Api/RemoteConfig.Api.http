@@ -1,0 +1,6 @@
+@RemoteConfig.Api_HostAddress = http://localhost:5012
+
+GET {{RemoteConfig.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

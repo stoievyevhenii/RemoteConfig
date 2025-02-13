@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyVersion>1.2.13.2</AssemblyVersion>
+    <FileVersion>1.2.13.2</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RemoteConfig.Core\RemoteConfig.Core.csproj" />
+    <ProjectReference Include="..\RemoteConfig.DataAccess\RemoteConfig.DataAccess.csproj" />
+    <ProjectReference Include="..\RemoteConfig.Shared\RemoteConfig.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
