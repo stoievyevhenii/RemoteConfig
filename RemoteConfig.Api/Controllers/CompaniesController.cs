@@ -28,6 +28,12 @@ namespace RemoteConfig.Api.Controllers
             return Ok(ApiResult<IEnumerable<Company>>.Success(await _companyService.GetAllAsync()));
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(string id)
+        {
+            return Ok(ApiResult<Company>.Success(await _companyService.GetAsync(Guid.Parse(id))));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post(CreateCompanyRequest createCompanyRequest)
         {

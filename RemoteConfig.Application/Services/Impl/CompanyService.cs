@@ -8,31 +8,29 @@ namespace RemoteConfig.Application.Services.Impl
 {
     public class CompanyService : ICompanyService
     {
-        private readonly IClaimService _claimService;
         private readonly ICompanyRepository _companyRepository;
+        private readonly string _userId;
 
         public CompanyService(ICompanyRepository companyRepository, IClaimService claimService)
         {
-            _claimService = claimService;
             _companyRepository = companyRepository;
+            _userId = claimService.GetUserId();
         }
 
         public async Task<Company> AddRecord(CreateCompanyRequest createCompanyRequest)
         {
-            var userId = _claimService.GetUserId();
-
             var company = new Company
             {
                 Name = createCompanyRequest.Name,
-                Owner = new Guid(userId),
+                Owner = new Guid(_userId),
                 NormalizedName = createCompanyRequest.Name.ToUpper()
             };
 
             var anyExist = await _companyRepository
                 .GetFirstOrDefaultAsync(x => x.NormalizedName == company.NormalizedName
-                    && x.Owner == Guid.Parse(userId));
+                    && x.Owner == Guid.Parse(_userId)) != null;
 
-            if (anyExist is not null)
+            if (anyExist)
             {
                 throw new DublicateRecordException("Company already exist");
             }
@@ -52,19 +50,27 @@ namespace RemoteConfig.Application.Services.Impl
 
         public async Task<List<Company>> GetAllAsync()
         {
-            return await _companyRepository.GetAllAsync();
+            return await _companyRepository.GetAsync(r => r.Owner == Guid.Parse(_userId));
+        }
+
+        public async Task<Company> GetAsync(Guid id)
+        {
+            return await _companyRepository
+                .GetFirstAsync(r => r.Id == id && r.Owner == Guid.Parse(_userId))
+                    ?? throw new RecordNotFoundException("Company not found");
         }
 
         public async Task<Company> Update(Guid id, UpdateCompanyRequest updateCompany)
         {
-            var record = await _companyRepository.GetFirstOrDefaultAsync(x => x.Id == id)
-                ?? throw new RecordNotFoundException("Company not found");
+            var record = await _companyRepository.GetFirstAsync(x => x.Id == id);
 
-            if (record.Name != updateCompany.Name)
+            if (record.NormalizedName == updateCompany.Name.ToUpper())
             {
-                record.Name = updateCompany.Name;
-                record.NormalizedName = updateCompany.Name.ToUpper();
+                return record;
             }
+
+            record.Name = updateCompany.Name;
+            record.NormalizedName = updateCompany.Name.ToUpper();
 
             await _companyRepository.UpdateAsync(record);
 

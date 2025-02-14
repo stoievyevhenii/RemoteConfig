@@ -11,6 +11,8 @@ namespace RemoteConfig.Application.Services
 
         Task<List<Company>> GetAllAsync();
 
+        Task<Company> GetAsync(Guid id);
+
         Task<Company> Update(Guid id, UpdateCompanyRequest updateCompany);
     }
 }
