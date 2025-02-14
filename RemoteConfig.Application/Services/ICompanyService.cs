@@ -10,5 +10,7 @@ namespace RemoteConfig.Application.Services
         Task<bool> Delete(Guid companyId);
 
         Task<List<Company>> GetAllAsync();
+
+        Task<Company> Update(Guid id, UpdateCompanyRequest updateCompany);
     }
 }

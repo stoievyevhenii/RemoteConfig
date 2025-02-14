@@ -54,5 +54,21 @@ namespace RemoteConfig.Application.Services.Impl
         {
             return await _companyRepository.GetAllAsync();
         }
+
+        public async Task<Company> Update(Guid id, UpdateCompanyRequest updateCompany)
+        {
+            var record = await _companyRepository.GetFirstOrDefaultAsync(x => x.Id == id)
+                ?? throw new RecordNotFoundException("Company not found");
+
+            if (record.Name != updateCompany.Name)
+            {
+                record.Name = updateCompany.Name;
+                record.NormalizedName = updateCompany.Name.ToUpper();
+            }
+
+            await _companyRepository.UpdateAsync(record);
+
+            return record;
+        }
     }
 }

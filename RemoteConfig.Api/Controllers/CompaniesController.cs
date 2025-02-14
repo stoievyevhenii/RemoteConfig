@@ -33,5 +33,11 @@ namespace RemoteConfig.Api.Controllers
         {
             return Ok(ApiResult<Company>.Success(await _companyService.AddRecord(createCompanyRequest)));
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(string id, UpdateCompanyRequest updateCompany)
+        {
+            return Ok(ApiResult<Company>.Success(await _companyService.Update(Guid.Parse(id), updateCompany)));
+        }
     }
 }
