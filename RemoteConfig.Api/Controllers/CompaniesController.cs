@@ -16,6 +16,12 @@ namespace RemoteConfig.Api.Controllers
             _companyService = companyService;
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            return Ok(ApiResult<bool>.Success(await _companyService.Delete(Guid.Parse(id))));
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {

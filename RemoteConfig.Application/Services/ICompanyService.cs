@@ -7,6 +7,8 @@ namespace RemoteConfig.Application.Services
     {
         Task<Company> AddRecord(CreateCompanyRequest createCompanyRequest);
 
+        Task<bool> Delete(Guid companyId);
+
         Task<List<Company>> GetAllAsync();
     }
 }

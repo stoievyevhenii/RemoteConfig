@@ -40,6 +40,16 @@ namespace RemoteConfig.Application.Services.Impl
             return await _companyRepository.AddAsync(company);
         }
 
+        public async Task<bool> Delete(Guid companyId)
+        {
+            var company = await _companyRepository
+                .GetFirstOrDefaultAsync(x => x.Id == companyId)
+                    ?? throw new RecordNotFoundException("Company not found");
+
+            await _companyRepository.DeleteAsync(company);
+            return true;
+        }
+
         public async Task<List<Company>> GetAllAsync()
         {
             return await _companyRepository.GetAllAsync();
