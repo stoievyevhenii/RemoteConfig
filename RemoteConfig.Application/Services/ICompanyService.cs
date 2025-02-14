@@ -5,14 +5,14 @@ namespace RemoteConfig.Application.Services
 {
     public interface ICompanyService
     {
-        Task<Company> AddRecord(CreateCompanyRequest createCompanyRequest);
+        Task<Company> AddAsync(CreateCompanyRequest createCompanyRequest);
 
-        Task<bool> Delete(Guid companyId);
+        Task<bool> DeleteAsync(Guid companyId);
 
         Task<List<Company>> GetAllAsync();
 
         Task<Company> GetAsync(Guid id);
 
-        Task<Company> Update(Guid id, UpdateCompanyRequest updateCompany);
+        Task<Company> UpdateAsync(Guid id, UpdateCompanyRequest updateCompany);
     }
 }

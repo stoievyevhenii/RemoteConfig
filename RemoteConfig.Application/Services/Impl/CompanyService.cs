@@ -17,7 +17,7 @@ namespace RemoteConfig.Application.Services.Impl
             _userId = claimService.GetUserId();
         }
 
-        public async Task<Company> AddRecord(CreateCompanyRequest createCompanyRequest)
+        public async Task<Company> AddAsync(CreateCompanyRequest createCompanyRequest)
         {
             var company = new Company
             {
@@ -38,7 +38,7 @@ namespace RemoteConfig.Application.Services.Impl
             return await _companyRepository.AddAsync(company);
         }
 
-        public async Task<bool> Delete(Guid companyId)
+        public async Task<bool> DeleteAsync(Guid companyId)
         {
             var company = await _companyRepository
                 .GetFirstOrDefaultAsync(x => x.Id == companyId)
@@ -60,7 +60,7 @@ namespace RemoteConfig.Application.Services.Impl
                     ?? throw new RecordNotFoundException("Company not found");
         }
 
-        public async Task<Company> Update(Guid id, UpdateCompanyRequest updateCompany)
+        public async Task<Company> UpdateAsync(Guid id, UpdateCompanyRequest updateCompany)
         {
             var record = await _companyRepository.GetFirstAsync(x => x.Id == id);
 

@@ -5,12 +5,14 @@ namespace RemoteConfig.Application.Services
 {
     public interface IProjectService
     {
-        Task<Project> AddRecord(CreateProjectRequest createProjectRequest);
+        Task<Project> AddAsync(CreateProjectRequest createProjectRequest);
 
-        Task<bool> Delete(Guid projectId);
+        Task<bool> DeleteAsync(Guid projectId);
 
         Task<List<Project>> GetAllRecordsInCompanyAsync(Guid companyId);
 
-        Task<Project> Update(Guid id, UpdateProjectRequest updateProject);
+        Task<Project> GetAsync(Guid projectId);
+
+        Task<Project> UpdateAsync(Guid id, UpdateProjectRequest updateProject);
     }
 }

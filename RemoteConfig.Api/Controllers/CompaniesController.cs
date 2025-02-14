@@ -19,7 +19,7 @@ namespace RemoteConfig.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            return Ok(ApiResult<bool>.Success(await _companyService.Delete(Guid.Parse(id))));
+            return Ok(ApiResult<bool>.Success(await _companyService.DeleteAsync(Guid.Parse(id))));
         }
 
         [HttpGet]
@@ -37,13 +37,13 @@ namespace RemoteConfig.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(CreateCompanyRequest createCompanyRequest)
         {
-            return Ok(ApiResult<Company>.Success(await _companyService.AddRecord(createCompanyRequest)));
+            return Ok(ApiResult<Company>.Success(await _companyService.AddAsync(createCompanyRequest)));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(string id, UpdateCompanyRequest updateCompany)
         {
-            return Ok(ApiResult<Company>.Success(await _companyService.Update(Guid.Parse(id), updateCompany)));
+            return Ok(ApiResult<Company>.Success(await _companyService.UpdateAsync(Guid.Parse(id), updateCompany)));
         }
     }
 }

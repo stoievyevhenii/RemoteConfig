@@ -2,10 +2,9 @@
 
 namespace RemoteConfig.Application.Models.Project
 {
-    public class UpdateProjectRequest
+    public class GetProjectRequest
     {
+        [Required]
         public string CompanyId { get; set; } = string.Empty;
-
-        public string Name { get; set; } = string.Empty;
     }
 }

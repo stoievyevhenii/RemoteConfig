@@ -3,7 +3,6 @@ using RemoteConfig.DataAccess.Persistence;
 
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using RemoteConfig.Core.Exceptions;
 
 namespace RemoteConfig.DataAccess.Repositories.Impl
 {
@@ -18,7 +17,7 @@ namespace RemoteConfig.DataAccess.Repositories.Impl
             return await DbSet
                 .Where(predicate)
                 .Include(x => x.Company)
-                .FirstOrDefaultAsync() ?? throw new ResourceNotFoundException(typeof(Project));
+                .FirstOrDefaultAsync();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace RemoteConfig.Application.Services.Impl
             _companyService = companyService;
         }
 
-        public async Task<Project> AddRecord(CreateProjectRequest createProjectRequest)
+        public async Task<Project> AddAsync(CreateProjectRequest createProjectRequest)
         {
             var anyExist = await _projectRepository
                 .GetFirstOrDefaultAsync(x => x.NormalizedName == createProjectRequest.Name.ToUpper()
@@ -40,7 +40,7 @@ namespace RemoteConfig.Application.Services.Impl
             return await _projectRepository.AddAsync(project);
         }
 
-        public async Task<bool> Delete(Guid projectId)
+        public async Task<bool> DeleteAsync(Guid projectId)
         {
             var project = await _projectRepository.GetFirstOrDefaultAsync(x => x.Id == projectId)
                 ?? throw new RecordNotFoundException("Project not found");
@@ -54,7 +54,12 @@ namespace RemoteConfig.Application.Services.Impl
             return await _projectRepository.GetAsync(x => x.Company.Id == companyId);
         }
 
-        public async Task<Project> Update(Guid id, UpdateProjectRequest updateProject)
+        public async Task<Project> GetAsync(Guid projectId)
+        {
+            return await _projectRepository.GetFirstOrDefaultAsync(x => x.Id == projectId);
+        }
+
+        public async Task<Project> UpdateAsync(Guid id, UpdateProjectRequest updateProject)
         {
             var record = await _projectRepository.GetFirstOrDefaultAsync(x => x.Id == id);
 
@@ -65,14 +70,31 @@ namespace RemoteConfig.Application.Services.Impl
                 return record;
             }
 
-            var company = await _companyService.GetAsync(companyGuid)
+            var mustUpdate = false;
+
+            if (updateProject.CompanyId != string.Empty)
+            {
+                var company = await _companyService.GetAsync(companyGuid)
                 ?? throw new RecordNotFoundException("Company not found");
 
-            record.Name = updateProject.Name;
-            record.NormalizedName = updateProject.Name.ToUpper();
-            record.Company = company;
+                record.Company = company;
 
-            await _projectRepository.UpdateAsync(record);
+                mustUpdate = true;
+            }
+
+            if (updateProject.Name != string.Empty)
+            {
+                record.Name = updateProject.Name;
+                record.NormalizedName = updateProject.Name.ToUpper();
+
+                mustUpdate = true;
+            }
+
+            if (mustUpdate)
+            {
+                await _projectRepository.UpdateAsync(record);
+            }
+
             return record;
         }
     }

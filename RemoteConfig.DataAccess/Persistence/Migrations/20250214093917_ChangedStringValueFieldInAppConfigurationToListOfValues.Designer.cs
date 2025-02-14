@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RemoteConfig.DataAccess.Persistence;
@@ -11,9 +12,11 @@ using RemoteConfig.DataAccess.Persistence;
 namespace RemoteConfig.DataAccess.Persistence.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20250214093917_ChangedStringValueFieldInAppConfigurationToListOfValues")]
+    partial class ChangedStringValueFieldInAppConfigurationToListOfValues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -176,9 +179,6 @@ namespace RemoteConfig.DataAccess.Persistence.Migrations
                     b.Property<string>("Key")
                         .HasColumnType("text");
 
-                    b.Property<string>("NormalizedKey")
-                        .HasColumnType("text");
-
                     b.Property<Guid?>("ProjectId")
                         .HasColumnType("uuid");
 
@@ -188,45 +188,14 @@ namespace RemoteConfig.DataAccess.Persistence.Migrations
                     b.Property<DateTimeOffset?>("UpdatedOn")
                         .HasColumnType("timestamp with time zone");
 
+                    b.PrimitiveCollection<string[]>("Values")
+                        .HasColumnType("text[]");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Configurations");
-                });
-
-            modelBuilder.Entity("RemoteConfig.Core.Entities.AppConfigurationValue", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("AppConfigurationId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset?>("UpdatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppConfigurationId");
-
-                    b.ToTable("AppConfigurationValue");
                 });
 
             modelBuilder.Entity("RemoteConfig.Core.Entities.Company", b =>
@@ -428,13 +397,6 @@ namespace RemoteConfig.DataAccess.Persistence.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("RemoteConfig.Core.Entities.AppConfigurationValue", b =>
-                {
-                    b.HasOne("RemoteConfig.Core.Entities.AppConfiguration", null)
-                        .WithMany("Values")
-                        .HasForeignKey("AppConfigurationId");
-                });
-
             modelBuilder.Entity("RemoteConfig.Core.Entities.Project", b =>
                 {
                     b.HasOne("RemoteConfig.Core.Entities.Company", "Company")
@@ -442,11 +404,6 @@ namespace RemoteConfig.DataAccess.Persistence.Migrations
                         .HasForeignKey("CompanyId");
 
                     b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("RemoteConfig.Core.Entities.AppConfiguration", b =>
-                {
-                    b.Navigation("Values");
                 });
 #pragma warning restore 612, 618
         }

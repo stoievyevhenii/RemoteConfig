@@ -20,25 +20,36 @@ namespace RemoteConfig.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            return Ok(ApiResult<bool>.Success(await _projectService.Delete(Guid.Parse(id))));
+            return Ok(ApiResult<bool>
+                .Success(await _projectService.DeleteAsync(Guid.Parse(id))));
         }
 
-        [HttpGet("{companyId}")]
-        public async Task<IActionResult> Get(string companyId)
+        [HttpGet]
+        public async Task<IActionResult> Get(GetProjectRequest getProjectRequest)
         {
-            return Ok(ApiResult<IEnumerable<Project>>.Success(await _projectService.GetAllRecordsInCompanyAsync(Guid.Parse(companyId))));
+            return Ok(ApiResult<IEnumerable<Project>>
+                .Success(await _projectService.GetAllRecordsInCompanyAsync(Guid.Parse(getProjectRequest.CompanyId))));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(string id)
+        {
+            return Ok(ApiResult<Project>
+                .Success(await _projectService.GetAsync(Guid.Parse(id))));
         }
 
         [HttpPost]
         public async Task<IActionResult> Post(CreateProjectRequest createProjectRequest)
         {
-            return Ok(ApiResult<Project>.Success(await _projectService.AddRecord(createProjectRequest)));
+            return Ok(ApiResult<Project>
+                .Success(await _projectService.AddAsync(createProjectRequest)));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(string id, UpdateProjectRequest updateProject)
         {
-            return Ok(ApiResult<Project>.Success(await _projectService.Update(Guid.Parse(id), updateProject: updateProject)));
+            return Ok(ApiResult<Project>
+                .Success(await _projectService.UpdateAsync(Guid.Parse(id), updateProject)));
         }
     }
 }
