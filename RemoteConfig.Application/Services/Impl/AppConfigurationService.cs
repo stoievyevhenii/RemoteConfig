@@ -85,9 +85,43 @@ namespace RemoteConfig.Application.Services.Impl
             };
         }
 
-        public Task<AppConfiguration> UpdateAsync(Guid id, UpdateAppConfigurationRequest updateAppConfigurationRequest)
+        public async Task<AppConfiguration> UpdateAsync(Guid id, UpdateAppConfigurationRequest updateAppConfigurationRequest)
         {
-            throw new NotImplementedException();
+            var record = await _appConfigurationRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+
+            var projectGuid = Guid.Parse(updateAppConfigurationRequest.ProjectId);
+
+            if (record.NormalizedKey == updateAppConfigurationRequest.Key.ToUpper() && record.Project.Id == projectGuid)
+            {
+                return record;
+            }
+
+            var mustUpdate = false;
+
+            if (updateAppConfigurationRequest.ProjectId != string.Empty)
+            {
+                var project = await _projectService.GetAsync(projectGuid)
+                ?? throw new RecordNotFoundException("Project not found");
+
+                record.Project = project;
+
+                mustUpdate = true;
+            }
+
+            if (updateAppConfigurationRequest.Key != string.Empty)
+            {
+                record.Key = updateAppConfigurationRequest.Key;
+                record.NormalizedKey = updateAppConfigurationRequest.Key.ToUpper();
+
+                mustUpdate = true;
+            }
+
+            if (mustUpdate)
+            {
+                await _appConfigurationRepository.UpdateAsync(record);
+            }
+
+            return record;
         }
     }
 }

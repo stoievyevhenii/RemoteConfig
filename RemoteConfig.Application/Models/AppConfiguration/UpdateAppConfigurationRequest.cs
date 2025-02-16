@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RemoteConfig.Core.Entities;
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,7 +11,8 @@ namespace RemoteConfig.Application.Models.AppConfiguration
 {
     public class UpdateAppConfigurationRequest
     {
-        public string Name { get; set; } = string.Empty;
+        public string Key { get; set; } = string.Empty;
         public string ProjectId { get; set; } = string.Empty;
+        public List<AppConfigurationValue> Values { get; set; } = new List<AppConfigurationValue>();
     }
 }
