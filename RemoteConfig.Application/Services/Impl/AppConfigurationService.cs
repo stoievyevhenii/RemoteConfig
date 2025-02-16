@@ -89,29 +89,34 @@ namespace RemoteConfig.Application.Services.Impl
         {
             var record = await _appConfigurationRepository.GetFirstOrDefaultAsync(x => x.Id == id);
 
-            var projectGuid = Guid.Parse(updateAppConfigurationRequest.ProjectId);
-
-            if (record.NormalizedKey == updateAppConfigurationRequest.Key.ToUpper() && record.Project.Id == projectGuid)
-            {
-                return record;
-            }
-
             var mustUpdate = false;
 
-            if (updateAppConfigurationRequest.ProjectId != string.Empty)
+            if (!string.IsNullOrEmpty(updateAppConfigurationRequest.ProjectId))
             {
+                var projectGuid = Guid.Parse(updateAppConfigurationRequest.ProjectId);
+
                 var project = await _projectService.GetAsync(projectGuid)
                 ?? throw new RecordNotFoundException("Project not found");
 
                 record.Project = project;
+                mustUpdate = true;
+            }
+
+            if (!string.IsNullOrEmpty(updateAppConfigurationRequest.Key))
+            {
+                record.Key = updateAppConfigurationRequest.Key;
+                record.NormalizedKey = updateAppConfigurationRequest.Key.ToUpper();
 
                 mustUpdate = true;
             }
 
-            if (updateAppConfigurationRequest.Key != string.Empty)
+            if (updateAppConfigurationRequest.Values?.Count > 0)
             {
-                record.Key = updateAppConfigurationRequest.Key;
-                record.NormalizedKey = updateAppConfigurationRequest.Key.ToUpper();
+                record.Values = updateAppConfigurationRequest.Values.Select(v => new AppConfigurationValue
+                {
+                    Description = v.Description,
+                    Value = v.Value,
+                }).ToList();
 
                 mustUpdate = true;
             }

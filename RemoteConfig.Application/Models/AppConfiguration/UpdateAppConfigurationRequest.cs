@@ -13,6 +13,6 @@ namespace RemoteConfig.Application.Models.AppConfiguration
     {
         public string Key { get; set; } = string.Empty;
         public string ProjectId { get; set; } = string.Empty;
-        public List<AppConfigurationValue> Values { get; set; } = new List<AppConfigurationValue>();
+        public List<AppConfigurationValueDto> Values { get; set; } = new List<AppConfigurationValueDto>();
     }
 }

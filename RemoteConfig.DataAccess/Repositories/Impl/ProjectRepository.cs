@@ -12,6 +12,14 @@ namespace RemoteConfig.DataAccess.Repositories.Impl
         {
         }
 
+        public new async Task<List<Project>> GetAsync(Expression<Func<Project, bool>> predicate)
+        {
+            return await DbSet
+                .Where(predicate)
+                .Include(x => x.Company)
+                .ToListAsync();
+        }
+
         public new async Task<Project> GetFirstOrDefaultAsync(Expression<Func<Project, bool>> predicate)
         {
             return await DbSet

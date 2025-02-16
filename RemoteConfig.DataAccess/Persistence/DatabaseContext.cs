@@ -20,9 +20,9 @@ namespace RemoteConfig.DataAccess.Persistence
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
-        public DbSet<Company> Company { get; set; }
+        public DbSet<Company> Companies { get; set; }
         public DbSet<AppConfiguration> Configurations { get; set; }
-        public DbSet<Project> Project { get; set; }
+        public DbSet<Project> Projects { get; set; }
 
         public new async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
         {
