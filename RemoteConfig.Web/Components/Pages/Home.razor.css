@@ -1,0 +1,19 @@
+﻿.page-columns {
+    display: flex;
+    gap: 10px;
+}
+
+.list-block {
+    flex: 1;
+}
+
+.card {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+    .card:hover {
+        background-color: rgb(222, 222, 222);
+        cursor: pointer;
+    }

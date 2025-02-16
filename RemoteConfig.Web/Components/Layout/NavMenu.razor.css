@@ -3,7 +3,7 @@
     cursor: pointer;
     width: 3.5rem;
     height: 2.5rem;
-    color: white;
+    color: black;
     position: absolute;
     top: 0.5rem;
     right: 1rem;
@@ -47,43 +47,46 @@
 }
 
 .nav-item {
-    font-size: 0.9rem;
-    padding-bottom: 0.5rem;
+    font-size: 0.875rem;
+    letter-spacing: .1px;
+    line-height: 1.25rem;
 }
 
-    .nav-item:first-of-type {
-        padding-top: 1rem;
-    }
-
-    .nav-item:last-of-type {
-        padding-bottom: 1rem;
+    .nav-item ::deep .nav-link::after {
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 3px;
+        top: 0;
+        right: 0;
     }
 
     .nav-item ::deep .nav-link {
-        color: #d7d7d7;
-        background: none;
+        color: #525252;
+        position: relative;
         border: none;
-        border-radius: 4px;
         height: 3rem;
         display: flex;
+        padding-left: 10px;
         align-items: center;
+        text-decoration: none;
         line-height: 3rem;
-        width: 100%;
     }
 
-.nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.37);
-    color: white;
-}
+    .nav-item ::deep a.active {
+        background-color: rgb(222, 222, 222);
+        font-weight: bold;
+        color: black;
+    }
 
-.nav-item ::deep .nav-link:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
-}
+    .nav-item ::deep .nav-link:hover {
+        background-color: rgb(222, 222, 222);
+    }
 
-.nav-scrollable {
-    display: none;
-}
+
+        .nav-scrollable {
+            display: none;
+        }
 
 .navbar-toggler:checked ~ .nav-scrollable {
     display: block;

@@ -1,7 +1,51 @@
 ﻿@page "/"
 @using RemoteConfig.Web.Components.Elements
 @using Synonms.CarbonBlazor.Infrastructure
-
+@using System.Diagnostics
 
 <PageHeader Title="Home" />
 
+<div class="page-columns">
+    <div class="list-block">
+        @foreach(var company in Companies){
+            <div id="@company" class="card" @onclick="@(() => CompanySelected(company))">@company</div>
+        }
+    </div>
+
+    <div class="list-block" style="visibility: @(ShowProjectBlock ? "visible" : "hidden")">
+        @foreach (var project in Projects)
+        {
+            <div id="@project" class="card" @onclick="@(() => ProjectSelected(project))">@project</div>
+        }
+    </div>
+
+    <div class="list-block" style="visibility: @(ShowConfigurationsBlock ? "visible" : "hidden")">
+        <h2>3</h2>
+    </div>
+
+</div>
+
+@code {
+    public List<string> Companies { get; set; } = new List<string>();
+    public List<string> Projects { get; set; } = new List<string>();
+
+    public bool ShowProjectBlock { get; set; } = false;
+    public bool ShowConfigurationsBlock { get; set; } = false;
+
+
+    protected override void OnInitialized()
+    {
+        Companies = new List<string> { "c1", "c2", "c3" };
+        Projects = new List<string> { "p1", "p2", "p3" };
+    }
+
+    private void CompanySelected(string company)
+    {
+        ShowProjectBlock = true;
+    }
+
+    private void ProjectSelected(string project)
+    {
+        ShowConfigurationsBlock = true;
+    }
+}
