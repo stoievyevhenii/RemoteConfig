@@ -24,7 +24,6 @@ namespace RemoteConfig.Application.Helpers
             var key = Encoding.ASCII.GetBytes(secretKey);
 
             var tokenHandler = new JwtSecurityTokenHandler();
-
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(

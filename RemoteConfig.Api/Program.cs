@@ -2,6 +2,7 @@ using RemoteConfig.Api;
 using RemoteConfig.Api.CachePolicy;
 using RemoteConfig.Api.Middlewares.Impl.CacheEvict;
 using RemoteConfig.Api.Middlewares.Impl.ExceptionHandling;
+using RemoteConfig.Api.Middlewares.Impl.TokenAuthMiddleware;
 using RemoteConfig.Application;
 using RemoteConfig.DataAccess;
 using RemoteConfig.DataAccess.Persistence;
@@ -51,6 +52,8 @@ app.UseCors(corsPolicyBuilder => corsPolicyBuilder
     .AllowCredentials());
 
 app.UseRouting();
+
+app.UseTokenAuth();
 
 app.UseAuthentication();
 

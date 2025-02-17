@@ -8,8 +8,8 @@
     <EnableSdkContainerDebugging>True</EnableSdkContainerDebugging>
     <ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:9.0</ContainerBaseImage>
     <UserSecretsId>ad0b94a3-87cd-483c-ac27-c1fde51e8281</UserSecretsId>
-    <AssemblyVersion>1.2.17.69</AssemblyVersion>
-    <FileVersion>1.2.17.69</FileVersion>
+    <AssemblyVersion>1.2.17.78</AssemblyVersion>
+    <FileVersion>1.2.17.78</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

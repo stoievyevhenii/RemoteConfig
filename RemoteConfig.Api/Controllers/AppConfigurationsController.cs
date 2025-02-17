@@ -38,7 +38,7 @@ namespace RemoteConfig.Api.Controllers
         }
 
         [HttpGet("external")]
-        public async Task<IActionResult> Get(AppConfigurationExternalRequest externalRequest)
+        public async Task<IActionResult> Get([FromQuery] AppConfigurationExternalRequest externalRequest)
         {
             return Ok(ApiResult<AppConfigurationExternalResponse>
                 .Success(await _appConfigurationService.GetAsync(externalRequest)));
