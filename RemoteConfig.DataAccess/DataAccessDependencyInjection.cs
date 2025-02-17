@@ -63,6 +63,7 @@ namespace RemoteConfig.DataAccess
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IAppConfigurationRepository, AppConfigurationRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
+            services.AddScoped<IAppConfigurationValueRepository, AppConfigurationValueRepository>();
         }
     }
 }

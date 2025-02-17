@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyVersion>1.2.17.25</AssemblyVersion>
-    <FileVersion>1.2.17.25</FileVersion>
+    <AssemblyVersion>1.2.17.26</AssemblyVersion>
+    <FileVersion>1.2.17.26</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,23 +2,27 @@
 using RemoteConfig.Core.Entities;
 using RemoteConfig.Core.Exceptions;
 using RemoteConfig.DataAccess.Repositories;
+using RemoteConfig.DataAccess.Repositories.Impl;
 
 namespace RemoteConfig.Application.Services.Impl
 {
     public class AppConfigurationService : IAppConfigurationService
     {
         private readonly IAppConfigurationRepository _appConfigurationRepository;
+        private readonly IAppConfigurationValueRepository _appConfigurationValueRepository;
         private readonly ICompanyService _companyService;
         private readonly IProjectService _projectService;
 
         public AppConfigurationService(
             IAppConfigurationRepository appConfigurationRepository,
+            IAppConfigurationValueRepository appConfigurationValueRepository,
             IProjectService projectService,
             ICompanyService companyService)
         {
             _appConfigurationRepository = appConfigurationRepository;
             _projectService = projectService;
             _companyService = companyService;
+            _appConfigurationValueRepository = appConfigurationValueRepository;
         }
 
         public async Task<AppConfiguration> AddAsync(CreateAppConfigurationRequest createAppConfigurationRequest)
@@ -138,8 +142,12 @@ namespace RemoteConfig.Application.Services.Impl
                 mustUpdate = true;
             }
 
+            var oldValues = new List<AppConfigurationValue>();
+
             if (updateAppConfigurationRequest.Values?.Count > 0)
             {
+                oldValues = record.Values.ToList();
+
                 record.Values = updateAppConfigurationRequest.Values.Select(v => new AppConfigurationValue
                 {
                     Description = v.Description,
@@ -153,6 +161,8 @@ namespace RemoteConfig.Application.Services.Impl
             {
                 await _appConfigurationRepository.UpdateAsync(record);
             }
+
+            await _appConfigurationValueRepository.DeleteRangeAsync(oldValues);
 
             return record;
         }
