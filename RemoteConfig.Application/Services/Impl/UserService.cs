@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using RemoteConfig.Application.Helpers;
 using RemoteConfig.Application.Models.User;
 using RemoteConfig.Core.Exceptions;
 using RemoteConfig.DataAccess.Identity;
@@ -22,7 +23,8 @@ namespace RemoteConfig.Application.Services.Impl
             var newUser = new ApplicationUser
             {
                 FullName = createUserModel.FullName,
-                UserName = createUserModel.Username
+                UserName = createUserModel.Username,
+                AccessToken = RandomDataCreator.GeneratePassword(64)
             };
 
             if (!await _roleManager.RoleExistsAsync(UserRole.User))
