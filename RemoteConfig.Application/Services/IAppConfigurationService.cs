@@ -14,6 +14,8 @@ namespace RemoteConfig.Application.Services
 
         Task<AppConfigurationResponseDto> GetAsync(Guid appConfigurationGuid);
 
+        Task<AppConfigurationExternalResponse> GetAsync(AppConfigurationExternalRequest externalRequest);
+
         Task<AppConfiguration> UpdateAsync(Guid id, UpdateAppConfigurationRequest updateAppConfigurationRequest);
     }
 }

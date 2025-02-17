@@ -7,6 +7,19 @@ namespace RemoteConfig.DataAccess.Persistence
 {
     public static class DatabaseContextSeed
     {
+        public static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
+        {
+            if (!await roleManager.RoleExistsAsync(UserRole.Admin))
+            {
+                await roleManager.CreateAsync(new IdentityRole(UserRole.Admin));
+            }
+
+            if (!await roleManager.RoleExistsAsync(UserRole.User))
+            {
+                await roleManager.CreateAsync(new IdentityRole(UserRole.User));
+            }
+        }
+
         public static async Task SeedUsersAsync(DatabaseContext context, UserManager<ApplicationUser> userManager)
         {
             if (!userManager.Users.Any())

@@ -12,7 +12,11 @@ public static class AutomatedMigration
     {
         var context = services.GetRequiredService<DatabaseContext>();
         await context.Database.MigrateAsync();
+
         var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
         await DatabaseContextSeed.SeedUsersAsync(context, userManager);
+        await DatabaseContextSeed.SeedRolesAsync(roleManager);
     }
 }

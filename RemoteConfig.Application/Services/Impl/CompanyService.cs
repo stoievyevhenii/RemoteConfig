@@ -60,6 +60,13 @@ namespace RemoteConfig.Application.Services.Impl
                     ?? throw new RecordNotFoundException("Company not found");
         }
 
+        public async Task<Company> GetAsync(string companyName)
+        {
+            return await _companyRepository
+                .GetFirstAsync(r => r.NormalizedName == companyName.ToUpper() && r.Owner == Guid.Parse(_userId))
+                    ?? throw new RecordNotFoundException("Company not found");
+        }
+
         public async Task<Company> UpdateAsync(Guid id, UpdateCompanyRequest updateCompany)
         {
             var record = await _companyRepository.GetFirstAsync(x => x.Id == id);

@@ -8,12 +8,17 @@ namespace RemoteConfig.Application.Services.Impl
     public class AppConfigurationService : IAppConfigurationService
     {
         private readonly IAppConfigurationRepository _appConfigurationRepository;
+        private readonly ICompanyService _companyService;
         private readonly IProjectService _projectService;
 
-        public AppConfigurationService(IAppConfigurationRepository appConfigurationRepository, IProjectService projectService)
+        public AppConfigurationService(
+            IAppConfigurationRepository appConfigurationRepository,
+            IProjectService projectService,
+            ICompanyService companyService)
         {
             _appConfigurationRepository = appConfigurationRepository;
             _projectService = projectService;
+            _companyService = companyService;
         }
 
         public async Task<AppConfiguration> AddAsync(CreateAppConfigurationRequest createAppConfigurationRequest)
@@ -82,6 +87,29 @@ namespace RemoteConfig.Application.Services.Impl
                 Values = record.Values,
                 UpdatedBy = record.UpdatedBy,
                 UpdatedOn = record.UpdatedOn
+            };
+        }
+
+        public async Task<AppConfigurationExternalResponse> GetAsync(AppConfigurationExternalRequest externalRequest)
+        {
+            var company = await _companyService.GetAsync(externalRequest.CompanyName)
+                ?? throw new RecordNotFoundException("Company not found");
+
+            var projectsList = await _projectService.GetAllRecordsInCompanyAsync(company.Id)
+                ?? throw new RecordNotFoundException("Projects list is empty");
+
+            var project = projectsList.FirstOrDefault(x => x.Name == externalRequest.ProjectName)
+                ?? throw new RecordNotFoundException("Project not found");
+
+            var appConfiguration = await _appConfigurationRepository
+                .GetFirstOrDefaultAsync(x => x.Project.Id == project.Id
+                    && x.NormalizedKey == externalRequest.AppConfigKey.ToUpper())
+                ?? throw new RecordNotFoundException("App configuration not found");
+
+            return new AppConfigurationExternalResponse()
+            {
+                Key = appConfiguration.Key,
+                Values = appConfiguration.Values,
             };
         }
 

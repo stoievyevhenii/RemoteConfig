@@ -13,6 +13,8 @@ namespace RemoteConfig.Application.Services
 
         Task<Company> GetAsync(Guid id);
 
+        Task<Company> GetAsync(string companyName);
+
         Task<Company> UpdateAsync(Guid id, UpdateCompanyRequest updateCompany);
     }
 }

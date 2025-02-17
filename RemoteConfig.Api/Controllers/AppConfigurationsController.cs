@@ -37,6 +37,13 @@ namespace RemoteConfig.Api.Controllers
                 .Success(await _appConfigurationService.GetAllRecordsInProjectAsync(Guid.Parse(getAppConfigurationRequest.ProjectId))));
         }
 
+        [HttpGet("external")]
+        public async Task<IActionResult> Get(AppConfigurationExternalRequest externalRequest)
+        {
+            return Ok(ApiResult<AppConfigurationExternalResponse>
+                .Success(await _appConfigurationService.GetAsync(externalRequest)));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post(CreateAppConfigurationRequest createAppConfigurationRequest)
         {

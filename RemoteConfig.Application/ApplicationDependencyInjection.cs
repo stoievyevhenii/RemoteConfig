@@ -25,6 +25,7 @@ namespace RemoteConfig.Application
             services.AddScoped<IClaimService, ClaimService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICompanyService, CompanyService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IAppConfigurationService, AppConfigurationService>();
         }
